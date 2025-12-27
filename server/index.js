@@ -11,21 +11,23 @@ app.use(express.json());
 
 // Routes
 const userRoutes = require("./routes/userRoutes");
-app.use("/api/users", userRoutes);
+const crisisRoutes = require("./routes/crisisRoutes");
 
-// Test Route
+app.use("/api/users", userRoutes);
+app.use("/api/crisis", crisisRoutes);
+
+// Test route
 app.get("/", (req, res) => {
   res.send("Crisis Support MVP Backend is running");
 });
 
-// MongoDB Connection + Server Start
+// Server + DB
 const PORT = process.env.PORT || 5000;
 
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB connected successfully");
-
     app.listen(PORT, () => {
       console.log(`🚀 Server running on port ${PORT}`);
     });
